@@ -1,0 +1,42 @@
+
+body{
+    height: 10000px;
+}
+
+.nav{
+    position:fixed;
+    /* background-color:black; */
+    height: 70px;
+    width:100%;
+    transition: all 0.3s ease;
+}
+
+.nav-black{
+    background-color: black;
+}
+
+.nav-content{
+    display: flex;
+    /* flex-shrink: 0; */
+    justify-content: space-between;
+    align-items:flex-end;   
+}
+.nav-logo-1{
+    position: relative;
+    flex-shrink: 0;
+    max-width: 30%;
+    height: 30px;
+    width: 100px;
+    left:20px;
+    top:9px;  
+    /*width automtically set to auto*/
+}
+
+.nav-avatar-1{
+    position: relative;
+    max-width: 20%;
+    top:12px;
+    right: 15px;
+    height: 40px;
+    width:40px;
+}
