@@ -5,7 +5,6 @@ body{
 
 .nav{
     position:fixed;
-    /* background-color:black; */
     height: 70px;
     width:100%;
     transition: all 0.3s ease;
@@ -17,13 +16,12 @@ body{
 
 .nav-content{
     display: flex;
-    /* flex-shrink: 0; */
     justify-content: space-between;
     align-items:flex-end;   
 }
 .nav-logo-1{
     position: relative;
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
     max-width: 30%;
     height: 30px;
     width: 100px;
