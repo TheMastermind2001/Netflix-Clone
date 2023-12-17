@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './Banner.css'
 import image1 from './image1.png';
 import { useEffect } from 'react';
+import axios from 'axios';
 // import { set } from 'immer/dist/internal';
 
 
@@ -9,77 +10,60 @@ function Banner() {
   
   const[movieArray,setMovieArray]=useState([]);
   const[movieDetails,setMovieDetails]=useState([]);
+  const[posterPath,setPosterPath]=useState('');
 
+  // const handleStateChange=async (response)=>{
+  //   await setMovieArray(response.results);
+  // }
 
-  const handleStateChange=async (response)=>{
-    // await setMovieArray(s =>
-    //    {
-    //     console.log(response.results);
-    //     return response.results;
-       
-    //   });
-    // const something=async ()=>{
-    //   await setMovieArray(response.results);  
-    // }
-    await setMovieArray(response.results);
-    // await something();
+  const fetchData = async() => {
+    // const axios = require('axios');
 
-    // console.log(movieArray);
-  }
-
-
-  
-  function fetchData(){
+    const apiKey = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYmFjZmVkMTZkYjU4OTQ0ZjcxNTU2ZDg4Nzg3NmM5ZiIsInN1YiI6IjY1N2MzYTIxZWM4YTQzMDEzNzAxMWE4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.quPsXIOlk4hXg-MXVPn5_FW9G3NW9c6j-54LWVyylVA'; // Replace with your TMDb API key
+    //or read access token
+    //see which one works
     const options = {
-      method: 'GET',
+      method: 'get',
+      url: 'https://api.themoviedb.org/3/trending/all/day',
+      params: {
+        language: 'en-US',
+      },
       headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYmFjZmVkMTZkYjU4OTQ0ZjcxNTU2ZDg4Nzg3NmM5ZiIsInN1YiI6IjY1N2MzYTIxZWM4YTQzMDEzNzAxMWE4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.quPsXIOlk4hXg-MXVPn5_FW9G3NW9c6j-54LWVyylVA'
-      }
+        Accept: 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
     };
-    
-    fetch('https://api.themoviedb.org/3/trending/all/day?language=en-US', options)
-      .then(response => response.json())
-      .then(response => {
-        // console.log(response);
-        handleStateChange(response);
-        // console.log(movieArray.results);
-        // console.log(movieArray.results.length)
-        // const randidx=Math.floor(Math.random() * ( movieArray.results.length));
-        // setMovieDetails(movieArray.results[randidx]);
-        // console.log(movieArray.results)
-        // console.log(movieArray.results.length,randidx,movieArray.results)
-      })
-      .catch(err => console.error(err));
-    
+
+    try {
+      const response = await axios(options);
+      const responseData = response.data;
+      console.log(responseData);
+      setMovieArray(response.results);
+      const randomIndex = Math.floor(Math.random() * response.data.results.length);
+      setMovieDetails(response.data.results[randomIndex]);
+      const baseImageUrl = 'https://image.tmdb.org/t/p/original'; // Use the desired size code if needed
+
+      const fullPosterPath = `${baseImageUrl}${response.data.results[randomIndex].poster_path}`;
+      setPosterPath(fullPosterPath);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   }
   
 
 
 
   useEffect(()=>{
-    
-
-    // async function handleStateChange(response) {
-    //   await setMovieArray(response.results);
-    //   await console.log(movieArray);
-    // }
-
-    
     fetchData();
-    // console.log(movieArray);
-
-  },[])
-
-  useEffect(()=>{
     console.log(movieArray);
-    console.log("lund");
-  },[movieArray])
-  // const movebg=movieDetails.
+    console.log(movieDetails);
+  }, []);
+
   return (
   <header className="banner" style={{
-    backgroundSize: "cover",
-    backgroundImage: `url(${image1})`,
+    backgroundSize: "auto",
+    backgroundImage: `url(
+      ${posterPath})`,
     backgroundPosition: "center center"
   }}
   >
