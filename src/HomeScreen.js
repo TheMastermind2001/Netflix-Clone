@@ -6,8 +6,10 @@ function HomeScreen() {
   return (
     <div className="homeScreen">
         <Nav/>
-        <img src="./images/full black bg" alt=""></img>
+        
         <Banner/>
+
+        <div className='empty'></div>
         
         {/*Row*/}
     </div>
