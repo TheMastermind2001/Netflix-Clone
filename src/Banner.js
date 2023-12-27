@@ -54,14 +54,14 @@ function Banner() {
     try {
       const response = await axios(options);
       const responseData = response.data;
-      console.log(responseData);
+      // console.log(responseData);
       setMovieArray(response.results);
       const randomIndex = Math.floor(Math.random() * response.data.results.length);
       setMovieDetails(response.data.results[randomIndex]);
       const s1=response.data.results[randomIndex]?.overview
-      setMovieDescription(truncate(s1,100));
-      console.log(typeof(s1));
-      
+      setMovieDescription(truncate(s1,200));
+      // console.log(randomIndex);
+      // console.log(response.data.results[randomIndex]);
       const baseImageUrl = 'https://image.tmdb.org/t/p/original'; // Use the desired size code if needed
 
       const fullPosterPath = `${baseImageUrl}${response.data.results[randomIndex]?.backdrop_path}`;
@@ -90,7 +90,7 @@ function Banner() {
   >
 
 <div className="banner-contents">
-    <h1 className="banner-title">{movieDetails?.title || movieDetails?.original_title}</h1>
+    <h1 className="banner-title">{movieDetails?.title || movieDetails?.original_title || movieDetails?.original_name}</h1>
     <div className="banner-buttons">
         <button className="banner-button banner-button-1">Play</button>
         <button className="banner-button banner-button-2">My List</button>

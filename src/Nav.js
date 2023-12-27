@@ -7,7 +7,7 @@ function Nav() {
   // const [countscrolls,setCountScrolls]=useState(0);
 
   const handleScroll=()=>{
-    if(window.scrollY>300){
+    if(window.scrollY>50){
       setShow(true);
     }
     else{

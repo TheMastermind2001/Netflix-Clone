@@ -1,6 +1,6 @@
 
 body{
-    height: 10000px;
+    /* height: 10000px; */
 }
 
 .nav{
@@ -28,6 +28,7 @@ body{
     width: 100px;
     left:20px;
     top:9px;  
+    margin-left: 20px;
     /*width automtically set to auto*/
 }
 

@@ -1,0 +1,41 @@
+.row{
+    /* z-index:10; */
+    color: white;
+    margin-left:40px;
+    /* display:flex; */
+}
+
+.row-title{
+    padding-top: 25px;
+    padding-bottom: 15px;
+    /* padding-left: 30px; */
+
+}
+.row-content{
+    display: flex;
+    gap:15px;
+    overflow-y: hidden;
+    overflow-x: scroll; 
+    /* overflow:hidden; */
+    /* white-space: nowrap; */
+}
+
+.row-poster{
+    width: 15vw;
+    height: 8vw;
+    cursor: pointer;
+    border-radius: 8px;
+    /* width:100%;  */
+    /* display: flex; */
+}
+
+.row-content::-webkit-scrollbar{
+    display: none;
+}
+
+.row-poster:hover {
+    /* border-radius: 8px; */
+    transition: transform 0.3s ease;
+    transform: scale(1.1); /* Increase the size by 10% on hover */
+    opacity: 1;
+  }
