@@ -33,6 +33,9 @@
     box-sizing: border-box;  /*ensures no overflow due to paddng*/
     /* justify-content: right; */
     /* top */
+
+    left:0;
+    right:0;
 }
 
 .loginScreen-body > h1{
@@ -82,7 +85,7 @@
 
 .loginScreen-getStarted{
     /* position: absolute; */
-    padding: 18px 20px;
+    padding: 16.4px 20px;
     /* position: relative; */
     border:none;
     background-color: #e50914;
