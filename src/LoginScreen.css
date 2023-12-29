@@ -1,0 +1,112 @@
+
+.loginScreen{
+    
+    background: url("https://thefatork.store/cdn/shop/articles/netflix.jpg?v=1669877376") center no-repeat;
+    background-size: cover;
+    /* height: 100vh; */
+}
+
+.loginScreen-gradient{
+    width:100%;
+    z-index: 1;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    background-image: linear-gradient(
+    to top, 
+    transparent,
+    rgba(0,0,0,0.8) 0,
+    rgba(0,0,0,0) 60%,
+    rgba(0,0,0,0.8) 100%
+    );
+}
+
+.loginScreen-body{
+    z-index: 1;
+    color: #fff;
+    padding: 20px;
+    position: absolute;
+    top: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;  /*ensures no overflow due to paddng*/
+    /* justify-content: right; */
+    /* top */
+}
+
+.loginScreen-body > h1{
+    font-size: 3.125 rem;
+    /* font-weight: 600; */
+    margin-bottom: 20px;
+}
+
+.loginScreen-body > h2{
+    font-size: 2 rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.loginScreen-body > h3{
+    font-size: 1.3 rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.loginScreen-logo-1{
+    position: fixed;
+    left:0;
+    width:150px;
+    object-fit: contain;   
+    /*//aspect ratio remains same*/
+    margin-left: 20px;
+    top:20px;
+
+    /* left:0; */
+}
+
+
+.loginScreen-input>form>input{
+    /* position:absolute; */
+    /* top:60%; */
+    padding: 10px;
+    outline-width: 0;
+    height: 30px;
+    width: 30%;
+    border: none;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    /* justify-content: center; */
+}
+
+.loginScreen-getStarted{
+    /* position: absolute; */
+    padding: 18px 20px;
+    /* position: relative; */
+    border:none;
+    background-color: #e50914;
+    color:white;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.loginScreen-button{
+    position:fixed;
+    right: 20px;
+    top:20px;
+    padding: 10px 20px;
+    size: 1rem;
+    color: #fff;
+    background-color: #e50914;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;     
+    ;
+}
+
+.loginScreen-form{
+    /* display: flex; */
+    gap:0;
+}
