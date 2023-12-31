@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
-import "./Nav.css"
-import { useState } from 'react'
+import React, { useEffect } from 'react';
+import "./Nav.css";
+import { useState } from 'react';
+import {auth} from "./firebase.js";
+import { signOut } from 'firebase/auth';
 function Nav() {
 
   const [show,setShow]=useState(false);
@@ -33,7 +35,18 @@ function Nav() {
             alt="logo for netflix">    
             </img>
 
-            <img className="nav-avatar-1"
+            <img 
+            
+            onClick={()=>{
+              signOut(auth).then(() => {
+                console.log("message from Nav.js sign out succesful");
+                // Sign-out successful.
+              }).catch((error) => {
+                console.log("There was an error signing you out");
+                // An error happened.
+              });
+            }}
+            className="nav-avatar-1"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuv_89dQV4F_8TqeGgd2YfxGlN3I5vllGxb3jfJu7cg&s" 
             alt="avatar">    
             </img>
