@@ -4,7 +4,7 @@ import './App.css';
 import { onAuthStateChanged } from 'firebase/auth';
 import {auth} from "./firebase.js";
 // import LoginScreen from './LoginScreen';
-
+import ProfileScreen from "./ProfileScreen.js"
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 import LoginScreen from './LoginScreen';
 import {useDispatch, useSelector} from "react-redux";
@@ -15,7 +15,6 @@ import { selectUser } from './features/counter/userSlice';
 
 function App() {
 
-  // var userstatus=null;
   // const userval=useSelector(selectUser);
   const userval=useSelector(state=>state.user.user)?.id;
   // const userstate=useSelector(state=>state);
@@ -49,7 +48,7 @@ function App() {
         // userstatus=user.uid;
         console.log(user);
         // setuserstatus(user.uid);
-        console.log(userstatus);
+        // console.log(userstatus);
         console.log("logged in "+uid);
         // handleLogin(user);  
         handleLogin(
@@ -77,7 +76,9 @@ function App() {
 
       <Router>
         <Routes>
-          
+
+         <Route exact path="/profile" element={<ProfileScreen/>}/>
+
         {!userstatus?
             <Route exact path="/" element={<LoginScreen/>}/>
             :

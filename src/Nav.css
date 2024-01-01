@@ -21,6 +21,7 @@ body{
     align-items:flex-end;   
 }
 .nav-logo-1{
+    cursor:pointer;
     position: relative;
     /* flex-shrink: 0; */
     max-width: 30%;
