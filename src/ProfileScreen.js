@@ -4,8 +4,10 @@ import Nav from './Nav';
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
 import {auth} from "./firebase";
 import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 function ProfileScreen() {
     const user=useSelector(state=>state.user.user?.email);
+    const navigate=useNavigate();
     return (
     <div className="profileScreen">
 
@@ -32,11 +34,16 @@ function ProfileScreen() {
                             signOut(auth).then(() => {
                                 console.log("message from ProfileScreen.js sign out succesful");
                                 // Sign-out successful.
-                            }).catch((error) => {
+                            }).catch((error) => { 
                                 console.log("There was an error signing you out");
                                 // An error happened.
                             });
-                            }}
+                            navigate("/");
+                            }
+                            
+                            
+
+                        }
                         className="profileScreen-signout">Sign Out</button>
                     </div>
 
