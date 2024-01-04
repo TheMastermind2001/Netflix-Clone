@@ -32,7 +32,7 @@ function ProfileScreen() {
 
                     <div className="profileScreen-plans">
                     <h3>Plans</h3>
-
+                        
                         <PlanScreen/>
                         <button 
                             onClick={()=>{
