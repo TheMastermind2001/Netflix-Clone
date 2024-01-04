@@ -13,10 +13,24 @@
     opacity:1;
 }
 
-.planScreen-plan>button{
+
+.current-package-button{
+    padding:10px 10px;
+    font-size: 0.9rem;
+    background-color: gray;
+    color:#fff;
+}
+
+.subscribe-button{
     padding:10px 20px;
     font-size: 1rem;
-    color: #fff;background-color: #e50914;
+    background-color: #e50914;
+}
+
+.planScreen-plan>button{
+    /* padding:10px 20px; */
+    /* font-size: 1rem; */
+    color: #fff;
     font-weight: 600;
     border: none;
     cursor: pointer;

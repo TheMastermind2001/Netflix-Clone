@@ -7,22 +7,12 @@ import {collection} from 'firebase/firestore/lite';
 import { collection as collectionlite } from 'firebase/firestore'; 
 import {query,where,getDocs} from 'firebase/firestore/lite';
 import { doc } from 'firebase/firestore';
-// import { doc } from 'firebase/firestore/lite';
 import {onSnapshot} from 'firebase/firestore' ;
 import { addDoc } from 'firebase/firestore';
-// import { addDoc } from 'firebase/firestore/lite';
-// import { collection } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
-
-// import redirectToCheckout
-// import { loadStripe } from '@stripe/stripe-js';
-
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
-
-// var firebase = require('firebase');
-// console.log("Hi");
 
 const firebaseConfig = {
     apiKey: "AIzaSyAWVHtDoE_N46GR2nSypOOkj4uRUumBzKs",
@@ -36,28 +26,15 @@ const firebaseConfig = {
   const app = initializeApp(firebaseConfig);
   const db1 = getFirestore(app);
   const auth = getAuth(app);
-  // const auth2=firebase.auth();
-  // console.log(auth===auth2);
-
- 
-  
-
-
-
-
 
 function PlanScreen() {
-  // const[products,setProducts]=useState([]);
   const[products,setProducts]=useState({});
+  const[sub,setSub]=useState({});
   const currentUser=useSelector(state=>state.user.user);
-  
-  
   const createCheckoutSession = async (priceId) => {
     try {
       console.log(db1);
       console.log(currentUser.id);
-      // const temp1=collection(db, 'customers', currentUser.id, 'checkout_sessions');
-      // console.log(temp1);
       const customerRef=collectionlite(db1, 'customers');
       const customerdocRef = doc(customerRef, currentUser.id);
       console.log(customerdocRef);
@@ -72,56 +49,57 @@ function PlanScreen() {
       onSnapshot((docRef), async (snap) => {
         const { error, url } = snap.data();
         if (error) {
-          // Show an error to your customer and
-          // inspect your Cloud Function logs in the Firebase console.
           alert(`An error occurred: ${error.message}`);
         }
         if (url) {
-
-          /*const stripe=await loadStripe("pk_test_51OTbNBSB8iKaafDy5pQgM1drdUrXbghSy9t377Ujv3biqYKVI9gf9Izp15FlY3o4AlULk7khqkfuqsL6t1mNXirG00fqK8a7Wl");
-          stripe.redirectToCheckout({url});
-          */
-
-          // We have a Stripe Checkout URL, let's redirect.
-          // window.location.assign(url);
           window.location.href=url;
         }
         
       })
-
-      /*
-      const docRef = await addDoc(collection(db, 'customers', currentUser.id, 'checkout_sessions'), {
-        price: priceId,
-        success_url: window.location.origin,
-        cancel_url: window.location.origin,
-      });
-  
-      // Wait for the CheckoutSession to get attached by the extension
-      onSnapshot(doc(docRef), (snap) => {
-        const { error, url } = snap.data();
-        if (error) {
-          // Show an error to your customer and
-          // inspect your Cloud Function logs in the Firebase console.
-          alert(`An error occurred: ${error.message}`);
-        }
-        if (url) {
-          // We have a Stripe Checkout URL, let's redirect.
-          window.location.assign(url);
-        }
-        
-      });*/
     } catch (error) {
       console.error('Error creating checkout session:', error.message);
     }
   };
   
-  // Call the function to create the checkout session
   
+  useEffect(()=>{
+    
+    const customerId = currentUser?.id; // Replace with the actual customer ID
+    if(customerId==null){
+      return;
+    }
+// Get a reference to the "payments" collection for the specified customer
+    const paymentsCollectionRef = collection(db, "customers", customerId, "payments");
+
+    getDocs(paymentsCollectionRef)
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const paymentDetails = doc.data();
+          const paymentId = paymentDetails.id;
+          const created = paymentDetails.created;
+          const role = paymentDetails.payment_method_options.card.mandate_options.description;
+          // console.log("Payment Details:", paymentDetails);
+          // console.log("Payment ID:", paymentId);
+          // console.log("Created:", created);
+          // console.log("Role:", role);
+          setSub(
+            {
+              role:role,
+              start:created
+
+            }
+          )
+        });
+      })
+      .catch((error) => {
+        console.error("Error getting payments:", error);
+      });
+
+  },[currentUser?.id]);
+
+  console.log(sub);
 
   useEffect(()=>{
-    // const temp=db.collection('customers').get;
-    // console.log(db);
-
     const getDB=async()=>{
       try {
         const productRef = collection(db, 'products');
@@ -134,11 +112,9 @@ function PlanScreen() {
           console.log('No matching documents.');
           return;
         }
-        
         const func2=async()=>{
           const productdetails={};
           snapshot.docs.forEach(async (doc,index) => {
-            // const productData = { id: doc.id, ...doc.data() };
             productdetails[doc.id]=doc.data();
             const priceRef = collection(doc.ref, 'prices');
             const q = query(priceRef, where('active', '==', true));
@@ -147,11 +123,9 @@ function PlanScreen() {
               productdetails[doc.id].prices=[];
               productdetails[doc.id].prices.push({id: pricedoc.id,...pricedoc.data()});
             })
-            // console.log(index,productdetails);
           } ); 
           return productdetails;
         }
-        
         const ans=await func2();
         console.log(ans);
         const arr=Object.entries(ans);
@@ -159,10 +133,7 @@ function PlanScreen() {
         setProducts(ans);
         (Object.entries(products)).map(([id,data])=>{
           console.log(data);
-          // return <div>{data.name}</div>
         })
-        // console.log(productdetails.entries);
-
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -173,6 +144,9 @@ function PlanScreen() {
   return (
     <div className="planScreen">
         {Object.entries(products).map(([id,data])=>{
+
+          const isCurrentPackage=(data?.name?.includes(sub?.role));
+
           return (
           <div className="planScreen-plan" key={id}>
             <div className="planScreen-info">
@@ -181,16 +155,19 @@ function PlanScreen() {
               
             </div>
             <button 
+
+            className={isCurrentPackage?"current-package-button":"subscribe-button"}
+
             onClick={
               ()=>{
                 console.log(products[id].prices[0].id);
-                createCheckoutSession(products[id].prices[0].id);
-                // loadCheckout(productData.prices[0].id);
+
+                !isCurrentPackage && createCheckoutSession(products[id]?.prices[0]?.id);
               }
             }
-            
-            
-            >Subscribe</button> 
+            >
+              {isCurrentPackage?"Current Package":"Subscribe"}
+            </button> 
           </div>
           )
         })}

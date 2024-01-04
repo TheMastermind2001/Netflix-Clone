@@ -4,8 +4,9 @@ import {auth} from "./firebase.js";
 import {createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 // const auth = getAuth();
 
-function SignUpScreen({setSignIn}) {
+function SignUpScreen({setSignIn,emailEntry}) {
 
+  console.log(emailEntry);
   const emailRef=useRef(null);
   const pwdRef=useRef(null);
 
@@ -46,7 +47,7 @@ function SignUpScreen({setSignIn}) {
     <div className="signUpScreen">
       <form className="signupscreen-form">
         <h1>Sign In</h1>
-        <input ref={emailRef} placeholder="Email" type="email"></input>
+        <input ref={emailRef} placeholder="Email" type="email" defaultValue={emailEntry}></input>
         <input ref={pwdRef} placeholder="Password" type="password"></input>
 
         {/* <button onClick={()=>{
